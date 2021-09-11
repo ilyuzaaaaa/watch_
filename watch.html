@@ -1,0 +1,117 @@
+<style type="text/css">
+.clock_style {
+    width: 30px;
+    height: 30px;
+    padding-top: 10px;
+    font-size: 11px;
+    text-align: center;
+    color: #0000FF;
+}
+.clock {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.clock2 {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    font-size: 2px;
+}
+</style>
+
+<script type="text/javascript">
+var Rad = 45;
+var sec_Col = 'style="background: #FF0000;"';
+var min_Col = 'style="background: #0000FF;"';
+var hr_Col = 'style="background: #000000;"';
+var HH = "....";
+var MM = "......";
+var SS = "........";
+var Y = X = Rad + 15;
+var d = document;
+
+NS6 = (d.getElementById&&!d.all);
+IE4 = (d.all);
+if (NS6){
+for (i=1; i<13; i++){
+d.write('<div id="Digits' + i + '" class="clock clock_style">' + i + '</div>');
+}
+for (i=0; i<HH.length; i++){
+d.write('<div id="Oz' + i + '" class="clock clock2" ' + hr_Col + '></div>');
+}
+for (i=0; i<MM.length; i++){
+d.write('<div id="Oy' + i + '" class="clock clock2" ' + min_Col + '></div>');
+}
+for (i=0; i<SS.length; i++){
+d.write('<div id="Ox' + i + '" class="clock clock2" ' + sec_Col + '></div>');
+}
+}
+if (IE4){
+d.write('<div class="clock"><div style="position:relative">');
+for (i=1; i<13; i++){
+d.write('<div id="Digits" class="clock clock_style">' + i + '</div>');
+}
+d.write('</div></div>');
+d.write('<div class="clock"><div style="position:relative">');
+for (i=0; i<HH.length; i++){
+d.write('<div id="z" class="clock2" ' + hr_Col + '></div>');
+}
+d.write('</div></div>');
+d.write('<div class="clock"><div style="position:relative">');
+for (i=0; i<MM.length; i++){
+d.write('<div id="y" class="clock2" ' + min_Col + '></div>');
+}
+d.write('</div></div>');
+d.write('<div class="clock"><div style="position:relative">');
+for (i=0; i<SS.length; i++){
+d.write('<div id="x" class="clock2" ' + sec_Col + '></div>');
+}
+d.write('</div></div>');
+}
+
+function start_clock(){
+time = new Date();
+sec = Math.PI*time.getSeconds()/30 - 1.57;
+min = Math.PI*time.getMinutes()/30 - 1.57;
+hr = Math.PI*time.getHours()/6 + Math.PI*parseInt(time.getMinutes())/360 - 1.57;
+if (NS6){
+for (i=1; i<13; i++){
+ d.getElementById("Digits"+i).style.top = Y-15+Rad*Math.sin(i*Math.PI/6-1.51)
+ d.getElementById("Digits"+i).style.left = X-15+Rad*Math.cos(i*Math.PI/6-1.51)
+ }
+for (i=0; i<HH.length; i++){
+ d.getElementById("Oz"+i).style.top = Y+i*Rad/9*Math.sin(hr);
+ d.getElementById("Oz"+i).style.left = X+i*Rad/9*Math.cos(hr);
+ }
+for (i=0; i<MM.length; i++){
+ d.getElementById("Oy"+i).style.top = Y+i*Rad/9*Math.sin(min);
+ d.getElementById("Oy"+i).style.left = X+i*Rad/9*Math.cos(min);
+ }
+for (i=0; i<SS.length; i++){
+ d.getElementById("Ox"+i).style.top = Y+i*Rad/9*Math.sin(sec);
+ d.getElementById("Ox"+i).style.left = X+i*Rad/9*Math.cos(sec);
+ }
+}
+if (IE4){
+for (i=0; i<12;++i){
+ Digits[i].style.pixelTop = Y-15+Rad*Math.sin(i*Math.PI/6-1.045);
+ Digits[i].style.pixelLeft = X-15+Rad*Math.cos(i*Math.PI/6-1.045);
+ }
+for (i=0; i<HH.length; i++){
+ z[i].style.pixelTop = Y+i*Rad/9*Math.sin(hr);
+ z[i].style.pixelLeft = X+i*Rad/9*Math.cos(hr);
+ }
+for (i=0; i<MM.length; i++){
+ y[i].style.pixelTop = Y+i*Rad/9*Math.sin(min);
+ y[i].style.pixelLeft = X+i*Rad/9*Math.cos(min);
+ }
+for (i=0; i<SS.length; i++){
+ x[i].style.pixelTop = Y+i*Rad/9*Math.sin(sec);
+ x[i].style.pixelLeft = X+i*Rad/9*Math.cos(sec);
+ }
+}
+setTimeout('start_clock()', 100);
+}
+start_clock();
+</script>
